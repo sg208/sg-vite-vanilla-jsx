@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "name": "Item 1",
+      "dateAvailable": null
+    },
+    {
+      "name": "Item 2",
+      "dateAvailable": null
+    },
+    {
+      "name": "Item 3",
+      "dateAvailable": null
+    },
+    {
+      "name": "Item 4",
+      "dateAvailable": null
+    },
+    {
+      "name": "Item 5",
+      "dateAvailable": null
+    },
+    {
+      "name": "Item 6",
+      "dateAvailable": null
+    },
+    {
+      "name": "Item 7",
+      "dateAvailable": null
+    },
+    {
+      "name": "Item 8",
+      "dateAvailable": null
+    },
+    {
+      "name": "Item 9",
+      "dateAvailable": null
+    }
+  ]
+}
