@@ -1,1 +1,0 @@
-# sg-vite-vanilla-jsx
