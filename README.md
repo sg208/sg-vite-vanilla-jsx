@@ -4,7 +4,7 @@ This is a simple form picker with inhouse built datepicker.
 
 ## Demo
 
-Demo is hosted on Cloudflare Pages: https://sg-vite-vanilla-jsx.pages.dev/
+Demo is hosted on Cloudflare Pages: https://sg-vite-vanilla-jsx.engg.me/
 
 ## Node / NPM Version
 
