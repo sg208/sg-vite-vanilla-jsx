@@ -11,14 +11,14 @@ function DatePicker({ id, calendar, triggerEl }) {
 
     // Remove previously selected date
     Array.from(el(`#${id} button[data-type="btndate"]`)).map((item) => {
-      item.classList.remove('bg-red-500')
+      item.classList.remove('bg-red-600')
       item.classList.remove('text-white')
       item.classList.remove('font-semibold')
       el(triggerEl).classList.remove('!border-red-500')
     })
 
     // TODO: This should be done as a single class
-    event.target.classList.add('bg-red-500')
+    event.target.classList.add('bg-red-600')
     event.target.classList.add('text-white')
     event.target.classList.add('font-semibold')
 
@@ -36,7 +36,6 @@ function DatePicker({ id, calendar, triggerEl }) {
     return (
       <button
         class="w-9 rounded-md p-2 text-sm hover:bg-slate-100 hover:text-red-500 disabled:cursor-auto disabled:text-slate-300 disabled:hover:bg-white"
-        role="listitem"
         aria-label={`Select ${item.dateFull}`}
         onClick={clickDate}
         data-value={item.dateShort}
@@ -48,11 +47,7 @@ function DatePicker({ id, calendar, triggerEl }) {
   })
 
   const calendarDayNamesHeading = (array) => {
-    return array.map((item) => (
-      <div class="w-9 p-2 text-sm" role="listitem">
-        {item}
-      </div>
-    ))
+    return array.map((item) => <div class="w-9 p-2 text-sm">{item}</div>)
   }
 
   const clickCloseDatepicker = (event) => {
@@ -88,14 +83,17 @@ function DatePicker({ id, calendar, triggerEl }) {
             &#8594;
           </button>
         </div>
-        <div class="flex flex-wrap gap-x-0.5 gap-y-0.5 pt-0.5 " role="list">
+        <div
+          class="flex flex-wrap gap-x-0.5 gap-y-0.5 pt-0.5"
+          aria-hidden="true"
+        >
           {calendarDayNamesHeading(dayNames.value)}
         </div>
-        <div class="flex flex-wrap gap-x-0.5 gap-y-0.5 pt-0.5 " role="list">
+        <div class="flex flex-wrap gap-x-0.5 gap-y-0.5 pt-0.5 ">
           {calendarItem}
         </div>
         <button
-          class="mt-2 rounded-md bg-slate-100 p-2 text-sm hover:bg-red-500 hover:text-white"
+          class="mt-2 rounded-md bg-slate-100 p-2 text-sm hover:bg-red-600 hover:text-white"
           onClick={clickCloseDatepicker}
         >
           Close datepicker
