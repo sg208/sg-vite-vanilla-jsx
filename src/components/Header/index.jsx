@@ -1,7 +1,7 @@
 function Header({ text }) {
   return (
-    <header class="bg-lime-500 p-10 text-center text-white">
-      <h1>Hello {text || 'there'}, welcome!</h1>
+    <header class="bg-lime-700 p-5 text-center text-white" role="banner">
+      <h1 class="text-2xl font-bold">Form Picker</h1>
     </header>
   )
 }

@@ -1,25 +1,25 @@
-import AutoImport from "unplugin-auto-import/vite"
+import AutoImport from 'unplugin-auto-import/vite'
 
 export default {
   server: {
-    port: 3000,
+    port: 3000
   },
   preview: {
-    port: 8000,
+    port: 8000
   },
   plugins: [
     AutoImport({
       include: [
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
-        /\.md$/, // .md
+        /\.md$/ // .md
       ],
-      dirs: ["./src/**"],
+      dirs: ['./src/**'],
       imports: [
         {
-          "start-dom-jsx": ["h", "Fragment"],
-        },
-      ],
-    }),
+          'start-dom-jsx': ['h', 'Fragment']
+        }
+      ]
+    })
   ],
   build: {
     // outDir: "prod",
@@ -28,10 +28,10 @@ export default {
     emptyOutDir: false,
     rollupOptions: {
       output: {
-        entryFileNames: "index.js",
+        entryFileNames: 'index.js'
         // minifyInternalExports: true,
-      },
-    },
+      }
+    }
     // lib: {
     //   entry: "src/index.js",
     //   formats: ["iife"],
@@ -40,7 +40,7 @@ export default {
     // },
   },
   esbuild: {
-    jsxFactory: "h",
-    jsxFragment: "Fragment",
-  },
+    jsxFactory: 'h',
+    jsxFragment: 'Fragment'
+  }
 }
