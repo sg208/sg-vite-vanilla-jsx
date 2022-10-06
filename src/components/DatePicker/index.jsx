@@ -1,3 +1,6 @@
+// Components
+import Icon from './../Icon'
+
 const { getCalendar, dayNames, closeDatepicker } = useDate()
 
 // TODO: Datepicker needs to be keyboard accessible with arrow keys in addition to ESC key.
@@ -59,28 +62,26 @@ function DatePicker({ id, calendar, triggerEl }) {
   return (
     <section
       id={id}
-      class="absolute mt-2 hidden w-72 rounded-md border-2 border-slate-100 bg-white p-2.5"
+      class="fixed z-10 mx-auto mt-2 hidden rounded-md border-2 border-slate-100 bg-white p-2.5 lg:absolute"
       aria-hidden="true"
       data-mode="datepicker"
     >
-      <div class="flex flex-col">
+      <div class="flex w-72 flex-col">
         <div class="flex flex-row rounded-md bg-slate-100 p-2 text-center">
           <button
-            ref="arrow-left"
-            class="w-1/6"
+            class="hidden w-1/12"
             aria-hidden="false"
             aria-label="Go to previous month calendar"
           >
-            &#8592;
+            <Icon classes="fa-solid fa-chevron-left" />
           </button>
-          <div class="w-4/6">{calendarHeading}</div>
+          <div class="mx-auto w-full">{calendarHeading}</div>
           <button
-            ref="arrow-right"
-            class="w-1/6"
+            class="hidden w-1/12"
             aria-hidden="false"
             aria-label="Go to next month calendar"
           >
-            &#8594;
+            <Icon classes="fa-solid fa-chevron-right" />
           </button>
         </div>
         <div

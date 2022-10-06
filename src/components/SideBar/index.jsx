@@ -35,7 +35,7 @@ function SideBar() {
           aria-label="Expand content"
           aria-expanded="false"
         >
-          <Icon icon="fa-solid fa-circle-chevron-down" />
+          <Icon classes="fa-solid fa-circle-chevron-down p-1" />
         </button>
       </h2>
       <p id="sidebar-content-1" class="hidden p-5 lg:block">
