@@ -1,5 +1,5 @@
-function Icon({ icon }) {
-  return <i class={icon} aria-hidden="true"></i>
+function Icon({ classes }) {
+  return <i class={classes} aria-hidden="true"></i>
 }
 
 export default Icon
