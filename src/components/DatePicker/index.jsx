@@ -62,11 +62,11 @@ function DatePicker({ id, calendar, triggerEl }) {
   return (
     <section
       id={id}
-      class="fixed z-10 mx-auto mt-2 hidden rounded-md border-2 border-slate-100 bg-white p-2.5 lg:absolute"
+      class="fixed z-10 mx-auto mt-2 hidden w-72 rounded-md border-2 border-slate-100 bg-white p-2.5 lg:absolute"
       aria-hidden="true"
       data-mode="datepicker"
     >
-      <div class="flex w-72 flex-col">
+      <div class="flex flex-col">
         <div class="flex flex-row rounded-md bg-slate-100 p-2 text-center">
           <button
             class="hidden w-1/12"
