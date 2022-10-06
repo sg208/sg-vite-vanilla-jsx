@@ -13,13 +13,15 @@ Node v16.15.0
 NPM 8.5.5
 ```
 
-## Stacks
+## Goodies
 
 1. Vanilla JS
 2. Vite V3 (https://vitejs.dev/)
 3. JSX (https://www.npmjs.com/package/start-dom-jsx)
 4. Unplugin auto import (https://github.com/antfu/unplugin-auto-import)
 5. Tailwind CSS (https://tailwindcss.com/)
+6. FontAwesome (https://fontawesome.com/)
+7. SCSS (https://sass-lang.com/)
 
 ## Installation
 
