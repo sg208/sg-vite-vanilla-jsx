@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": ">=22.11.0"
+  },
   "scripts": {
     "dev": "vite",
     "dev2": "concurrently \"json-server ./jsonserver/db.json --port 8080 --routes ./jsonserver/routes.json\" \"vite\"",
