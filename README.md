@@ -9,8 +9,8 @@ Demo is hosted on Cloudflare Pages: https://sg-vite-vanilla-jsx.engg.me/
 ## Node / NPM Version
 
 ```
-Node v16.15.0
-NPM 8.5.5
+Node v22.11.0 (LTS)
+npm 10.x
 ```
 
 ## Goodies
