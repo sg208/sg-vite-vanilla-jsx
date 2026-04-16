@@ -7,7 +7,18 @@ export default [
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
-      globals: globals.browser
+      globals: {
+        ...globals.browser,
+        h: 'readonly',
+        Fragment: 'readonly',
+        el: 'readonly',
+        classList: 'readonly',
+        html: 'readonly',
+        nextTick: 'readonly',
+        scrollBottom: 'readonly',
+        ref: 'readonly',
+        jsx: 'readonly'
+      }
     },
     rules: {
       'no-extra-parens': ['error', 'all', { ignoreJSX: 'multi-line' }]
