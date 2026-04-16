@@ -12,18 +12,15 @@
     "build": "vite build",
     "preview": "vite preview",
     "prod": "vite build && vite preview",
-    "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix",
+    "lint": "oxlint src/",
     "format": "prettier --check src/",
     "format:fix": "prettier --write src/",
-    "fix": "npm run lint:fix && npm run format:fix"
+    "fix": "npm run lint && npm run format:fix"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@fortawesome/fontawesome-free": "^7.2.0",
     "@tailwindcss/postcss": "^4.2.2",
-    "eslint": "^10.2.0",
-    "globals": "^17.5.0",
+    "oxlint": "^1.60.0",
     "postcss": "^8.5.10",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.7.2",
