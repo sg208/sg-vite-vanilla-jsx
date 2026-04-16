@@ -11,14 +11,17 @@
     "dev2": "concurrently \"json-server ./jsonserver/db.json --port 8080 --routes ./jsonserver/routes.json\" \"vite\"",
     "build": "vite build",
     "preview": "vite preview",
-    "prod": "vite build && vite preview"
+    "prod": "vite build && vite preview",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --check src/",
+    "format:fix": "prettier --write src/",
+    "fix": "npm run lint:fix && npm run format:fix"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@fortawesome/fontawesome-free": "^7.2.0",
-    "@svgr/core": "^8.1.0",
     "@tailwindcss/postcss": "^4.2.2",
-    "autoprefixer": "^10.5.0",
     "eslint": "^10.2.0",
     "globals": "^17.5.0",
     "postcss": "^8.5.10",
