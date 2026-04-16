@@ -22,25 +22,18 @@ export default {
     })
   ],
   build: {
-    // outDir: "prod",
-    // minify: "esbuild",
-    // polyfillModulePreload: false,
     emptyOutDir: false,
     rollupOptions: {
       output: {
         entryFileNames: 'index.js'
-        // minifyInternalExports: true,
       }
     }
-    // lib: {
-    //   entry: "src/index.js",
-    //   formats: ["iife"],
-    //   fileName: "index",
-    //   name: "PaqtFormPicker",
-    // },
   },
-  esbuild: {
-    jsxFactory: 'h',
-    jsxFragment: 'Fragment'
+  oxc: {
+    jsx: {
+      runtime: 'classic',
+      pragma: 'h',
+      pragmaFrag: 'Fragment'
+    }
   }
 }
