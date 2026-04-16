@@ -51,7 +51,7 @@ function FormInputText({
       <button
         class="absolute right-1 top-1 text-lg text-slate-300"
         aria-label="Open calendar datepicker"
-        onCLick={openDatepicker}
+        onClick={openDatepicker}
       >
         <Icon classes="fa-regular fa-calendar-days p-2" />
       </button>
