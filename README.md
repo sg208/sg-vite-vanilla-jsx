@@ -16,12 +16,13 @@ pnpm 10 (see packageManager in package.json)
 ## Goodies
 
 1. Vanilla JS
-2. Vite V3 (https://vitejs.dev/)
+2. Vite 8 (https://vite.dev/)
 3. JSX (https://www.npmjs.com/package/start-dom-jsx)
 4. Unplugin auto import (https://github.com/antfu/unplugin-auto-import)
-5. Tailwind CSS (https://tailwindcss.com/)
+5. Tailwind CSS 4 (https://tailwindcss.com/)
 6. FontAwesome (https://fontawesome.com/)
 7. SCSS (https://sass-lang.com/)
+8. Vitest + jsdom tests (https://vitest.dev/)
 
 ## Installation
 
@@ -68,3 +69,17 @@ Generate files for production and run preview from generated files > localhost:8
 ```
 pnpm prod
 ```
+
+## Checks
+
+Run the tests, lint and format check
+
+```
+pnpm test
+pnpm lint
+pnpm format:check
+```
+
+## License
+
+MIT. See [LICENSE](LICENSE).
