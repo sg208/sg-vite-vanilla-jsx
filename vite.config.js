@@ -1,6 +1,9 @@
+/// <reference types="vitest/config" />
+import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 
-export default {
+export default defineConfig({
   server: {
     port: 3000
   },
@@ -8,6 +11,7 @@ export default {
     port: 8000
   },
   plugins: [
+    tailwindcss(),
     AutoImport({
       include: [
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
@@ -22,25 +26,22 @@ export default {
     })
   ],
   build: {
-    // outDir: "prod",
-    // minify: "esbuild",
-    // polyfillModulePreload: false,
     emptyOutDir: false,
     rollupOptions: {
       output: {
         entryFileNames: 'index.js'
-        // minifyInternalExports: true,
       }
     }
-    // lib: {
-    //   entry: "src/index.js",
-    //   formats: ["iife"],
-    //   fileName: "index",
-    //   name: "PaqtFormPicker",
-    // },
   },
-  esbuild: {
-    jsxFactory: 'h',
-    jsxFragment: 'Fragment'
+  oxc: {
+    jsx: {
+      runtime: 'classic',
+      pragma: 'h',
+      pragmaFrag: 'Fragment'
+    }
+  },
+  test: {
+    environment: 'jsdom',
+    include: ['tests/**/*.test.js']
   }
-}
+})
