@@ -90,7 +90,7 @@ function DatePicker({ id, calendar, triggerEl }) {
         >
           {calendarDayNamesHeading(dayNames.value)}
         </div>
-        <div class="flex flex-wrap gap-x-0.5 gap-y-0.5 pt-0.5 ">
+        <div class="flex flex-wrap gap-x-0.5 gap-y-0.5 pt-0.5">
           {calendarItem}
         </div>
         <button
