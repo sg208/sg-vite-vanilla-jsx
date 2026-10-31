@@ -2,7 +2,7 @@ const clickOutsideModal = (event) => {
   event.target.classList.toggle('!bg-transparent')
 }
 
-function Modal({}) {
+function Modal() {
   return (
     <section id="modal-container" aria-hidden="true">
       <div
