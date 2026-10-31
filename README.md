@@ -6,11 +6,11 @@ This is a simple form picker with inhouse built datepicker.
 
 Demo is hosted on Cloudflare Pages: https://sg-vite-vanilla-jsx.engg.me/
 
-## Node / NPM Version
+## Node / pnpm version
 
 ```
-Node v22.11.0 (LTS)
-npm 10.x
+Node 24 (see .node-version)
+pnpm 10 (see packageManager in package.json)
 ```
 
 ## Goodies
@@ -28,19 +28,19 @@ npm 10.x
 Install packages
 
 ```
-npm install
+pnpm install
 ```
 
 Install **jsonserver** globallay in your machine, skip if already installed
 
 ```
-npm install -g json-server
+pnpm add -g json-server@0.17.4
 ```
 
 Install **concurrently** globallay in your machine, skip if already installed
 
 ```
-npm install -g npm install -g concurrently
+pnpm add -g concurrently
 ```
 
 ## Running locally
@@ -48,23 +48,23 @@ npm install -g npm install -g concurrently
 Run locally WITHOUT jsonserver > localhost:3000
 
 ```
-npm run dev
+pnpm dev
 ```
 
 Run locally WITH jsonserver > localhost:3000
 
 ```
-npm run dev2
+pnpm dev2
 ```
 
 Generate files for production
 
 ```
-npm run build
+pnpm build
 ```
 
 Generate files for production and run preview from generated files > localhost:8000
 
 ```
-npm run prod
+pnpm prod
 ```
