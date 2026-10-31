@@ -2,9 +2,9 @@
 
 ## Architecture
 
-- `index.html` → `src/index.js` → `pages/Index.jsx` appended to `#app`. WHY: no framework; JSX compiles to real DOM nodes via `start-dom-jsx` `h` (`vite.config.js:42-45`).
+- `index.html` → `src/index.js` → `pages/Index.jsx` appended to `#app`. WHY: no framework; JSX compiles to real DOM nodes via `start-dom-jsx` `h` (`vite.config.js:36-42`, oxc classic pragma).
 - Components = functions returning DOM elements; state = `ref()` objects (`src/core/index.js:46`) held inside hooks.
-- Hooks + core helpers are globals through `unplugin-auto-import` (`vite.config.js:12-22`). WHY: keeps component files import-free.
+- Hooks + core helpers are globals through `unplugin-auto-import` (`vite.config.js:15-26`). WHY: keeps component files import-free.
 
 ## Data flow
 
