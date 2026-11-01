@@ -63,7 +63,7 @@ The site runs as a Cloudflare Worker with static assets, configured in `wrangler
 pnpm run deploy
 ```
 
-This builds and runs `wrangler deploy`. You need `wrangler` 4 installed globally and `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` set in the environment. Use `pnpm run deploy`, not `pnpm deploy`, which is a built-in pnpm workspace command.
+This builds and runs `wrangler deploy`. Wrangler 4 is a dev dependency, so you only need `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` set in the environment. Use `pnpm run deploy`, not `pnpm deploy`, which is a built-in pnpm workspace command.
 
 ## License
 
