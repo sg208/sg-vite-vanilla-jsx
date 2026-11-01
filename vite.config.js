@@ -36,6 +36,8 @@ export default defineConfig({
   oxc: {
     jsx: {
       runtime: 'classic',
+      // No __self/__source props: start-dom-jsx would write them to the DOM
+      development: false,
       pragma: 'h',
       pragmaFrag: 'Fragment'
     }
