@@ -1,45 +1,74 @@
 // Components
 import FormInputText from '../FormInputText'
 
-const { validateForms } = useForm()
-const findItems = (event) => {
-  event.preventDefault()
+const { validateForms, setFieldError, getFieldError, getRange, describeRange } =
+  useForm()
 
-  validateForms(Array.from(el('input[validate=true]', true)))
+const getFields = () => Array.from(el('input[validate=true]', true))
+
+const updateSummary = () => {
+  const summary = el('#form-status')
+  if (summary) {
+    summary.textContent =
+      describeRange(getRange()) || 'Pick a start and an end date.'
+  }
 }
 
-const renderContent = (
-  <section class="p-5 lg:h-screen lg:w-3/4 lg:border-r-2 lg:border-r-slate-50">
-    <form class="flex flex-col gap-y-5 border-b-2 border-b-slate-50 pb-5 lg:ml-0 lg:flex-row lg:gap-x-5 lg:gap-y-0">
+const handleSubmit = (event) => {
+  event.preventDefault()
+  validateForms(getFields())
+}
+
+// Clears a field's error as soon as it holds a valid date; new errors wait
+// for the next submit so nobody is scolded mid-typing.
+const handleInput = (event) => {
+  const input = event.target
+  if (input.getAttribute('aria-invalid') === 'true' && !getFieldError(input)) {
+    setFieldError(input)
+  }
+  updateSummary()
+}
+
+const Content = () => (
+  <section class="panel lg:col-span-2" aria-labelledby="range-title">
+    <div class="panel-head">
+      <h2 id="range-title" class="panel-title">
+        Date range
+      </h2>
+      <p class="panel-text">
+        Choose when the items start and end. Type a date or open the calendar.
+      </p>
+    </div>
+    <form
+      class="grid gap-x-4 gap-y-5 sm:grid-cols-2"
+      novalidate
+      onSubmit={handleSubmit}
+      onInput={handleInput}
+    >
       <FormInputText
         id="startDate"
-        placeholder="Start date"
-        label="Start date:"
-        class="lg:w-1/3"
+        label="Start date"
+        getRange={getRange}
         validate
         datepicker
       />
       <FormInputText
         id="endDate"
-        placeholder="End date"
-        label="End date:"
-        class="lg:w-1/3"
+        label="End date"
+        getRange={getRange}
         validate
         datepicker
       />
-
-      <button
-        class="rounded-md bg-red-600 px-5 py-2 text-white lg:w-1/3 lg:flex-none"
-        onClick={findItems}
-      >
-        Find Items
-      </button>
+      <div class="form-foot sm:col-span-2">
+        <p id="form-status" class="form-status">
+          Pick a start and an end date.
+        </p>
+        <button type="submit" class="button-primary">
+          Find items
+        </button>
+      </div>
     </form>
   </section>
 )
-
-function Content() {
-  return renderContent
-}
 
 export default Content

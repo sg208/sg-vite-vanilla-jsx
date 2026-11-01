@@ -1,16 +1,13 @@
-export function useData() {
+export const useData = () => {
   const fetchURL = 'http://localhost:8080/api/items/all'
 
   const allData = ref([])
   const isFetching = ref(true)
 
   const fetchData = async () => {
-    await fetch(fetchURL)
-      .then((response) => response.json())
-      .then((data) => {
-        allData.value = data
-        isFetching.value = false
-      })
+    const response = await fetch(fetchURL)
+    allData.value = await response.json()
+    isFetching.value = false
   }
 
   const getData = async () => {

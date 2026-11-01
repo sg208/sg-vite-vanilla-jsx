@@ -1,14 +1,12 @@
 import './Footer.module.css'
 
-function Footer() {
-  return (
-    <footer
-      class="fixed bottom-0 left-0 w-full border-t-2 border-t-slate-200 bg-slate-50 p-5"
-      role="contentinfo"
-    >
+const Footer = () => (
+  <footer class="site-footer" role="contentinfo">
+    <div class="frame">
       <p>This is a fixed footer element.</p>
-    </footer>
-  )
-}
+      <p class="site-footer-meta">Vite, JSX and no framework.</p>
+    </div>
+  </footer>
+)
 
 export default Footer
