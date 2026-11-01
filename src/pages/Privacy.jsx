@@ -17,16 +17,7 @@ const Privacy = () => (
     <ul>
       <li>
         sg-vite-vanilla-jsx.engg.app itself, for the page, its scripts, styles
-        and icon fonts.
-      </li>
-      <li>
-        Google Fonts (fonts.googleapis.com and fonts.gstatic.com), for the Geist
-        typeface. Google receives your IP address and browser details with that
-        request. See the{' '}
-        <Link href="https://policies.google.com/privacy">
-          Google privacy policy
-        </Link>
-        .
+        and fonts.
       </li>
     </ul>
     <p>

@@ -9,7 +9,7 @@ const Terms = () => (
     <p>
       Form picker is a demo and portfolio project: a date range form with a
       calendar written in plain JavaScript. It is not a product or a service,
-      and the items it lists are sample data.
+      and the item search is a placeholder with no real data behind it.
     </p>
 
     <h2>No warranty</h2>
