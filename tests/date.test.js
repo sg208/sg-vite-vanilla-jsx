@@ -40,3 +40,37 @@ describe('useDate().getCalendar', () => {
     expect(dayNames.value.at(-1)).toBe(sunday)
   })
 })
+
+describe('useDate padding', () => {
+  it('pads six cells when a month starts on a Sunday', () => {
+    const { getCalendar } = useDate()
+    // 1 June 2025 is a Sunday
+    const days = getCalendar(2025, 5)
+
+    expect(days.filter((day) => day.hidden)).toHaveLength(6)
+  })
+
+  it('does not add padding again on repeat calls', () => {
+    const { getCalendar } = useDate()
+    getCalendar(2025, JANUARY)
+    const days = getCalendar(2025, JANUARY)
+
+    expect(days.filter((day) => day.hidden)).toHaveLength(2)
+  })
+
+  it('cuts the month into full weeks', () => {
+    const { getWeeks } = useDate()
+    const weeks = getWeeks(2025, 5)
+
+    expect(weeks).toHaveLength(6)
+    expect(weeks.every((week) => week.length === 7)).toBe(true)
+  })
+
+  it('parses d-m-yyyy and rejects impossible dates', () => {
+    const { parseShort } = useDate()
+
+    expect(parseShort('29-2-2024')?.getDate()).toBe(29)
+    expect(parseShort('29-2-2025')).toBeNull()
+    expect(parseShort('2025-01-01')).toBeNull()
+  })
+})
