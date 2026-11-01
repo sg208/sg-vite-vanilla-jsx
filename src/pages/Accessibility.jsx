@@ -23,8 +23,8 @@ const Accessibility = () => (
         returns focus to the button that opened it.
       </li>
       <li>
-        Dates can also be typed straight into the fields as dd-mm-yyyy. The
-        keyboard shortcuts are listed next to the form.
+        Dates can also be typed straight into the fields as d-m-yyyy, dd-mm-yyyy
+        or ddmmyyyy. The keyboard shortcuts are listed next to the form.
       </li>
       <li>
         Each field has a visible label and hint. Errors are tied to their field,

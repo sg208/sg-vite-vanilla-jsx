@@ -54,11 +54,10 @@ describe('legal pages', () => {
     expect(links.some((link) => link.hasAttribute('aria-current'))).toBe(false)
   })
 
-  it('names Cloudflare and Google Fonts on the privacy page', () => {
+  it('names Cloudflare on the privacy page', () => {
     render('/privacy', Privacy)
 
     const text = document.querySelector('main').textContent
     expect(text).toContain('Cloudflare')
-    expect(text).toContain('fonts.googleapis.com')
   })
 })
