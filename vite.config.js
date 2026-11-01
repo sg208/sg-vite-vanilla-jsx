@@ -1,7 +1,24 @@
 /// <reference types="vitest/config" />
+import { readFileSync } from 'node:fs'
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
+
+// Hosted builds have no JSON Server, so emit its items as dist/api/items.json
+const emitItemsJson = () => ({
+  name: 'emit-items-json',
+  apply: 'build',
+  generateBundle() {
+    const db = JSON.parse(
+      readFileSync(new URL('./jsonserver/db.json', import.meta.url), 'utf8')
+    )
+    this.emitFile({
+      type: 'asset',
+      fileName: 'api/items.json',
+      source: JSON.stringify(db.items)
+    })
+  }
+})
 
 export default defineConfig({
   server: {
@@ -11,6 +28,7 @@ export default defineConfig({
     port: 8000
   },
   plugins: [
+    emitItemsJson(),
     tailwindcss(),
     AutoImport({
       include: [
