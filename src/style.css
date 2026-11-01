@@ -188,6 +188,43 @@
   .site-footer-meta {
     @apply text-[var(--muted)];
   }
+  .site-footer-links {
+    @apply -mx-2 flex flex-wrap gap-x-1;
+  }
+  .site-footer-link,
+  .back-link,
+  .legal-prose a {
+    @apply text-[var(--accent)] underline underline-offset-2 hover:text-[var(--ink)];
+  }
+  .site-footer-link {
+    @apply inline-flex min-h-11 items-center px-2 sm:min-h-0 sm:py-1;
+  }
+  .site-footer-link[aria-current='page'] {
+    @apply font-semibold text-[var(--ink)] no-underline;
+  }
+  .back-link {
+    @apply text-sm;
+  }
+
+  .legal-main {
+    @apply pt-6 pb-8 sm:pb-28;
+  }
+  .legal-prose {
+    @apply max-w-prose;
+  }
+  .legal-prose h2 {
+    @apply mt-8 mb-2 text-base font-semibold first:mt-0;
+  }
+  .legal-prose p,
+  .legal-prose ul {
+    @apply mt-3;
+  }
+  .legal-prose ul {
+    @apply list-disc space-y-2 pl-5;
+  }
+  .legal-prose code {
+    @apply rounded-[4px] bg-[var(--raised)] px-1 text-sm;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
