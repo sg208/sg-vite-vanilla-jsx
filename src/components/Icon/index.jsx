@@ -1,5 +1,3 @@
-function Icon({ classes }) {
-  return <i class={classes} aria-hidden="true"></i>
-}
+const Icon = ({ classes }) => <i class={classes} aria-hidden="true"></i>
 
 export default Icon
