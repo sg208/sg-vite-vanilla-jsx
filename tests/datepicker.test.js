@@ -31,7 +31,7 @@ describe('datepicker keyboard (APG date picker dialog)', () => {
 
     expect(dialog().getAttribute('role')).toBe('dialog')
     expect(dialog().getAttribute('aria-modal')).toBe('true')
-    expect(heading.textContent).toBe('januari 2025')
+    expect(heading.textContent).toBe('January 2025')
     expect(dialog().querySelector('[role=grid]')).not.toBeNull()
     expect(dialog().querySelectorAll('th[scope=col]')).toHaveLength(7)
   })
@@ -72,7 +72,7 @@ describe('datepicker keyboard (APG date picker dialog)', () => {
     press('ArrowRight')
 
     expect(focusedIso()).toBe('2025-02-01')
-    expect(dialog().querySelector('h3').textContent).toBe('februari 2025')
+    expect(dialog().querySelector('h3').textContent).toBe('February 2025')
   })
 
   it('jumps to the start and end of the week with Home and End', () => {
@@ -122,10 +122,10 @@ describe('datepicker keyboard (APG date picker dialog)', () => {
   it('pages months with the header buttons', () => {
     openOn('15-1-2025')
     dialog().querySelector('[aria-label="Next month"]').click()
-    expect(dialog().querySelector('h3').textContent).toBe('februari 2025')
+    expect(dialog().querySelector('h3').textContent).toBe('February 2025')
     dialog().querySelector('[aria-label="Previous month"]').click()
     dialog().querySelector('[aria-label="Previous month"]').click()
-    expect(dialog().querySelector('h3').textContent).toBe('december 2024')
+    expect(dialog().querySelector('h3').textContent).toBe('December 2024')
   })
 
   it('keeps Tab inside the dialog', () => {

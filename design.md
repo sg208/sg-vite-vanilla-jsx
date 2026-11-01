@@ -11,7 +11,7 @@
 - `useData` fetches items from json-server (`src/hooks/Data.js`).
 - `FormInputText` owns the label, input, hint, error and the trigger button; it creates a `DatePicker` controller (`{ element, open, close, isOpen }`).
 - `DatePicker` follows the WAI-ARIA APG date picker dialog pattern: `role="dialog"` labelled by the month heading, a `role="grid"` table with roving `tabindex`, `aria-selected` on the picked day and `aria-current="date"` on today. Grid keys live in `src/components/DatePicker/keys.js`; rows are rendered by `Weeks.jsx`.
-- Picking a date writes the nl-NL short date into the input, fires an `input` event, closes the dialog and returns focus to the trigger.
+- Picking a date writes the date as dd-mm-yyyy into the input, fires an `input` event, closes the dialog and returns focus to the trigger.
 - `useForm.validateForms` sets `aria-invalid`, fills the field's error text (tied with `aria-describedby`), focuses the first invalid field and announces the errors in `#arialive-assertive`. A valid range is summarised in `#form-status` and announced politely.
 
 ## Look

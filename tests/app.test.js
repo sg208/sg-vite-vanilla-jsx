@@ -87,6 +87,10 @@ describe('form picker page', () => {
     expect(document.querySelector('#form-status').textContent).toBe(
       'Finding items from 10-11-2026 to 14-11-2026, 5 days.'
     )
+    expect(document.querySelector('#arialive-assertive').textContent).toBe('')
+    expect(document.querySelector('#arialive-polite').textContent).toContain(
+      'Finding items'
+    )
   })
 
   it('expands the sidebar content on small screens', () => {

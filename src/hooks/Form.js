@@ -49,6 +49,9 @@ export const useForm = () => {
     const message = `Finding items from ${describeRange(range)}.`
     const status = el('#form-status')
     if (status) status.textContent = message
+    // Old errors must not linger in the assertive region.
+    const alertRegion = el('#arialive-assertive')
+    if (alertRegion) alertRegion.textContent = ''
     announce(message)
   }
 

@@ -1,6 +1,7 @@
-// Calendar maths and nl-NL formatting for the in-house datepicker.
-// Weeks start on Monday, as they do in the Netherlands.
-const LOCALE = 'nl-NL'
+// Calendar maths and formatting for the in-house datepicker.
+// Names are English (en-GB) to match the page language; weeks start on
+// Monday and dates are typed and shown as dd-mm-yyyy.
+const LOCALE = 'en-GB'
 const DAYS_IN_WEEK = 7
 const SHORT_DATE = /^(\d{1,2})-(\d{1,2})-(\d{4})$/
 
@@ -9,8 +10,10 @@ const weekdayLong = new Intl.DateTimeFormat(LOCALE, { weekday: 'long' })
 const monthLong = new Intl.DateTimeFormat(LOCALE, { month: 'long' })
 const monthShort = new Intl.DateTimeFormat(LOCALE, { month: 'short' })
 
+const pad = (value) => String(value).padStart(2, '0')
+
 const formatShort = (date) =>
-  date.toLocaleDateString(LOCALE, { dateStyle: 'short' })
+  `${pad(date.getDate())}-${pad(date.getMonth() + 1)}-${date.getFullYear()}`
 
 const formatFull = (date) =>
   date.toLocaleDateString(LOCALE, { dateStyle: 'full' })
@@ -22,11 +25,7 @@ const formatMonthHeading = (date) =>
 const weekdayIndex = (date) => (date.getDay() + 6) % DAYS_IN_WEEK
 
 const toISO = (date) =>
-  [
-    date.getFullYear(),
-    String(date.getMonth() + 1).padStart(2, '0'),
-    String(date.getDate()).padStart(2, '0')
-  ].join('-')
+  [date.getFullYear(), pad(date.getMonth() + 1), pad(date.getDate())].join('-')
 
 const fromISO = (iso) => {
   const [year, month, day] = iso.split('-').map(Number)
@@ -55,7 +54,7 @@ const addMonths = (date, amount) => {
 const startOfWeek = (date) => addDays(date, -weekdayIndex(date))
 const endOfWeek = (date) => addDays(date, DAYS_IN_WEEK - 1 - weekdayIndex(date))
 
-// Reads "d-m-yyyy" (the nl-NL short date) and rejects impossible dates.
+// Reads "d-m-yyyy" or "dd-mm-yyyy" and rejects impossible dates.
 const parseShort = (value = '') => {
   const match = value.trim().match(SHORT_DATE)
   if (!match) return null

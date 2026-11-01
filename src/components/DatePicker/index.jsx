@@ -162,7 +162,6 @@ const DatePicker = ({ id, label, input, trigger, getRange }) => {
         class="datepicker-grid"
         role="grid"
         aria-labelledby={headingId}
-        lang="nl"
         onKeyDown={handleGridKeydown}
         onClick={handleGridClick}
       >
