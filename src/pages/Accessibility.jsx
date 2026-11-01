@@ -40,8 +40,9 @@ const Accessibility = () => (
         and dark theme, which follow your system setting.
       </li>
       <li>
-        The form's fields and buttons are at least 44 pixels tall, and
-        animations are switched off when your system asks for reduced motion.
+        The date fields and the form's buttons are 44 pixels tall, the
+        calendar's days and buttons are 40 pixels, and animations are switched
+        off when your system asks for reduced motion.
       </li>
       <li>
         Automated tests check the labels, error messages, announcements and
@@ -55,7 +56,9 @@ const Accessibility = () => (
         The tests run in a simulated browser. The site has not been tested with
         every screen reader and browser pairing.
       </li>
-      <li>Typed dates must use the dd-mm-yyyy format.</li>
+      <li>
+        Typed dates must be day, month, year, such as 01-11-2026 or 01112026.
+      </li>
     </ul>
 
     <h2>Report a problem</h2>

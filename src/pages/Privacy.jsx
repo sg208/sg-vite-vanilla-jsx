@@ -16,8 +16,8 @@ const Privacy = () => (
     <p>Loading a page makes requests to these places:</p>
     <ul>
       <li>
-        sg-vite-vanilla-jsx.engg.app itself, for the page, its scripts, styles,
-        icon fonts and the sample items in <code>/api/items.json</code>.
+        sg-vite-vanilla-jsx.engg.app itself, for the page, its scripts, styles
+        and icon fonts.
       </li>
       <li>
         Google Fonts (fonts.googleapis.com and fonts.gstatic.com), for the Geist
