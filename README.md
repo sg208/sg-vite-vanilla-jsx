@@ -4,7 +4,11 @@ This is a simple form picker with inhouse built datepicker.
 
 ## Demo
 
-Demo is hosted on Cloudflare Pages: https://sg-vite-vanilla-jsx.engg.me/
+Demo is hosted as a Cloudflare Worker (static assets) on the sg208 account: https://sg-vite-vanilla-jsx.engg.app
+
+`wrangler.jsonc` holds the config. `pnpm deploy` builds and runs `wrangler deploy`; it needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` in the environment.
+
+Production builds emit the items in `jsonserver/db.json` as `dist/api/items.json`, and the app fetches that file in production. Locally, `pnpm dev2` still uses json-server on port 8080.
 
 ## Node / pnpm version
 
