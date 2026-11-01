@@ -4,6 +4,11 @@ import Accessibility from './pages/Accessibility'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 
+// Global styles: self-hosted Geist, bundled from @fontsource
+import '@fontsource/geist/400.css'
+import '@fontsource/geist/500.css'
+import '@fontsource/geist/600.css'
+
 // Global styles
 import './style.css'
 
