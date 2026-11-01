@@ -1,4 +1,12 @@
-import { beforeAll, describe, expect, it } from 'vitest'
+import {
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi
+} from 'vitest'
 import Index from '../src/pages/Index'
 
 const getByLabel = (label) => document.querySelector(`[aria-label="${label}"]`)
@@ -18,6 +26,11 @@ describe('form picker page', () => {
     document.querySelector('#app').append(Index())
   })
 
+  // Live regions are filled a moment after they are cleared.
+  beforeEach(() => vi.useFakeTimers())
+  afterEach(() => vi.useRealTimers())
+  const flushAnnouncements = () => vi.runAllTimers()
+
   it('renders the landmarks and both labelled date fields', () => {
     expect(document.querySelector('header h1').textContent).toBe('Form picker')
     expect(document.querySelector('main')).not.toBeNull()
@@ -31,6 +44,8 @@ describe('form picker page', () => {
 
   it('marks and announces empty fields when Find items is pressed', () => {
     findButton().click()
+    expect(document.querySelector('#arialive-assertive').textContent).toBe('')
+    flushAnnouncements()
 
     const start = document.querySelector('#startDate')
     expect(start.getAttribute('aria-invalid')).toBe('true')
@@ -77,9 +92,19 @@ describe('form picker page', () => {
     )
   })
 
-  it('summarises a valid range on submit', () => {
+  it('summarises a valid range on submit and clears old alerts', () => {
+    typeInto(document.querySelector('#startDate'), '')
+    typeInto(document.querySelector('#endDate'), '')
+    findButton().click()
+    flushAnnouncements()
+    expect(document.querySelector('#arialive-assertive').textContent).not.toBe(
+      ''
+    )
+
+    typeInto(document.querySelector('#startDate'), '10-11-2026')
     typeInto(document.querySelector('#endDate'), '14-11-2026')
     findButton().click()
+    flushAnnouncements()
 
     expect(
       document.querySelector('#endDate').getAttribute('aria-invalid')
@@ -94,13 +119,13 @@ describe('form picker page', () => {
   })
 
   it('expands the sidebar content on small screens', () => {
-    const toggle = getByLabel('Expand content')
+    const toggle = getByLabel('Keyboard shortcuts')
     const content = document.querySelector('#sidebar-content-1')
 
     expect(content.classList).toContain('hidden')
     toggle.click()
     expect(content.classList).not.toContain('hidden')
     expect(toggle.getAttribute('aria-expanded')).toBe('true')
-    expect(toggle.getAttribute('aria-label')).toBe('Hide content')
+    expect(toggle.getAttribute('aria-label')).toBe('Keyboard shortcuts')
   })
 })

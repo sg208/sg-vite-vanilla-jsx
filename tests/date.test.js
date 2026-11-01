@@ -72,4 +72,12 @@ describe('useDate padding', () => {
     expect(parseShort('29-2-2025')).toBeNull()
     expect(parseShort('2025-01-01')).toBeNull()
   })
+
+  it('parses ddmmyyyy typed without separators', () => {
+    const { parseShort, toISO } = useDate()
+
+    expect(toISO(parseShort('15012025'))).toBe('2025-01-15')
+    expect(parseShort('31022025')).toBeNull()
+    expect(parseShort('1512025')).toBeNull()
+  })
 })

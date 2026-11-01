@@ -4,6 +4,8 @@
 const LOCALE = 'en-GB'
 const DAYS_IN_WEEK = 7
 const SHORT_DATE = /^(\d{1,2})-(\d{1,2})-(\d{4})$/
+// Typed without separators: ddmmyyyy
+const COMPACT_DATE = /^(\d{2})(\d{2})(\d{4})$/
 
 const weekdayShort = new Intl.DateTimeFormat(LOCALE, { weekday: 'short' })
 const weekdayLong = new Intl.DateTimeFormat(LOCALE, { weekday: 'long' })
@@ -54,9 +56,10 @@ const addMonths = (date, amount) => {
 const startOfWeek = (date) => addDays(date, -weekdayIndex(date))
 const endOfWeek = (date) => addDays(date, DAYS_IN_WEEK - 1 - weekdayIndex(date))
 
-// Reads "d-m-yyyy" or "dd-mm-yyyy" and rejects impossible dates.
+// Reads "d-m-yyyy", "dd-mm-yyyy" or "ddmmyyyy" and rejects impossible dates.
 const parseShort = (value = '') => {
-  const match = value.trim().match(SHORT_DATE)
+  const text = value.trim()
+  const match = text.match(SHORT_DATE) ?? text.match(COMPACT_DATE)
   if (!match) return null
 
   const [day, month, year] = match.slice(1).map(Number)

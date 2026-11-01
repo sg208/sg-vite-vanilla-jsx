@@ -1,13 +1,28 @@
 // Validation and announcements for the date range form.
+
+// Pending announcement per live region, so a newer message replaces it.
+const pendingAnnouncements = {}
+const ANNOUNCE_DELAY_MS = 50
+
+const clearRegion = (selector) => {
+  clearTimeout(pendingAnnouncements[selector])
+  const region = el(selector)
+  if (region) region.textContent = ''
+  return region
+}
+
 export const useForm = () => {
   const { parseShort, formatShort, countDays } = useDate()
 
-  // Clears first so the same message is read out again.
+  // Clears now and fills in a later task, so screen readers notice the
+  // change even when the same message is repeated.
   const announce = (message, isUrgent = false) => {
-    const region = el(isUrgent ? '#arialive-assertive' : '#arialive-polite')
+    const selector = isUrgent ? '#arialive-assertive' : '#arialive-polite'
+    const region = clearRegion(selector)
     if (!region) return
-    region.textContent = ''
-    region.textContent = message
+    pendingAnnouncements[selector] = setTimeout(() => {
+      region.textContent = message
+    }, ANNOUNCE_DELAY_MS)
   }
 
   const setFieldError = (input, message = '') => {
@@ -50,8 +65,7 @@ export const useForm = () => {
     const status = el('#form-status')
     if (status) status.textContent = message
     // Old errors must not linger in the assertive region.
-    const alertRegion = el('#arialive-assertive')
-    if (alertRegion) alertRegion.textContent = ''
+    clearRegion('#arialive-assertive')
     announce(message)
   }
 

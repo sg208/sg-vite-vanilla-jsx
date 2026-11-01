@@ -36,7 +36,9 @@ const DatePicker = ({ id, label, input, trigger, getRange }) => {
       state.focusedDate.getMonth(),
       1
     )
-    heading.textContent = formatMonthHeading(state.viewMonth)
+    // Only on change, so the polite heading is not re-announced per day.
+    const headingText = formatMonthHeading(state.viewMonth)
+    if (heading.textContent !== headingText) heading.textContent = headingText
     body.replaceChildren(
       ...Weeks({
         viewMonth: state.viewMonth,
@@ -85,20 +87,32 @@ const DatePicker = ({ id, label, input, trigger, getRange }) => {
   const select = (date) => {
     input.value = formatShort(date)
     input.dispatchEvent(new Event('input', { bubbles: true }))
-    trigger.setAttribute(
-      'aria-label',
-      `Change ${label}, ${formatShort(date)} selected`
-    )
     close()
   }
+
+  // The trigger name follows whatever the field holds, typed or picked.
+  const updateTriggerLabel = () => {
+    const date = parseShort(input.value)
+    trigger.setAttribute(
+      'aria-label',
+      date
+        ? `Change ${label}, ${formatShort(date)} selected`
+        : `Choose ${label}`
+    )
+  }
+
+  input.addEventListener('input', updateTriggerLabel)
 
   const moveFocus = (date) => {
     state.focusedDate = date
     render(true)
   }
 
-  const handleMonthStep = (amount) => () =>
-    moveFocus(addMonths(state.focusedDate, amount))
+  // Focus stays on the month button so it can be pressed again.
+  const handleMonthStep = (amount) => () => {
+    state.focusedDate = addMonths(state.focusedDate, amount)
+    render(false)
+  }
 
   const handleGridKeydown = (event) => {
     const movedDate = getMovedDate(event, state.focusedDate)

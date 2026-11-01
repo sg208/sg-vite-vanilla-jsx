@@ -56,9 +56,11 @@
     border-color: var(--line);
   }
 
-  html {
-    /* scrollIntoView keeps the open calendar clear of the fixed footer */
-    scroll-padding-bottom: 5rem;
+  /* scrollIntoView keeps the open calendar clear of the fixed footer */
+  @media (min-width: 40rem) {
+    html {
+      scroll-padding-bottom: 5rem;
+    }
   }
 
   body {
@@ -66,7 +68,7 @@
     background: var(--ground);
     color: var(--ink);
     font-family: var(--font);
-    font-size: 15px;
+    font-size: 0.9375rem;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
@@ -98,7 +100,7 @@
   }
 
   .main-grid {
-    @apply grid items-start gap-4 pt-6 pb-28 lg:grid-cols-3;
+    @apply grid items-start gap-4 pt-6 pb-8 sm:pb-28 lg:grid-cols-3;
   }
 
   .panel {
@@ -154,7 +156,7 @@
     box-shadow: inset 0 0 0 1px var(--negative);
   }
   .field-trigger {
-    @apply absolute top-0.5 right-0.5 grid size-10 place-items-center rounded-[4px] text-[var(--muted)] hover:bg-[var(--raised)] hover:text-[var(--ink)];
+    @apply absolute top-0 right-0 grid size-11 place-items-center rounded-[var(--radius-control)] text-[var(--muted)] hover:bg-[var(--raised)] hover:text-[var(--ink)];
   }
   .field-trigger[aria-expanded='true'] {
     @apply bg-[var(--raised)] text-[var(--ink)];
@@ -176,8 +178,9 @@
     @apply h-11 shrink-0 rounded-[var(--radius-control)] bg-[var(--primary)] px-5 font-medium text-[var(--on-primary)] transition-[opacity,transform] hover:opacity-90 active:translate-y-px;
   }
 
+  /* In the page flow on phones so it never covers a focused field. */
   .site-footer {
-    @apply fixed bottom-0 left-0 z-10 w-full border-t border-[var(--line)] bg-[var(--surface)] py-3 text-sm;
+    @apply w-full border-t border-[var(--line)] bg-[var(--surface)] py-3 text-sm sm:fixed sm:bottom-0 sm:left-0 sm:z-10;
   }
   .site-footer .frame {
     @apply flex flex-wrap items-baseline justify-between gap-x-4;

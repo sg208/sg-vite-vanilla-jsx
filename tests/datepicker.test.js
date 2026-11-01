@@ -108,6 +108,33 @@ describe('datepicker keyboard (APG date picker dialog)', () => {
     )
   })
 
+  it('names the trigger from what the field holds', () => {
+    const input = document.querySelector('#startDate')
+    const typeInto = (value) => {
+      input.value = value
+      input.dispatchEvent(new Event('input', { bubbles: true }))
+    }
+
+    typeInto('3-2-2025')
+    expect(trigger().getAttribute('aria-label')).toBe(
+      'Change start date, 03-02-2025 selected'
+    )
+    typeInto('')
+    expect(trigger().getAttribute('aria-label')).toBe('Choose start date')
+  })
+
+  it('speaks the range edges and the days between them', () => {
+    document.querySelector('#endDate').value = '17-1-2025'
+    openOn('15-1-2025')
+    const nameOf = (iso) =>
+      dialog().querySelector(`[data-iso="${iso}"]`).getAttribute('aria-label')
+
+    expect(nameOf('2025-01-15')).toMatch(/, start date$/)
+    expect(nameOf('2025-01-16')).toMatch(/, in range$/)
+    expect(nameOf('2025-01-17')).toMatch(/, end date$/)
+    expect(nameOf('2025-01-18')).not.toMatch(/range|date$/)
+  })
+
   it('closes on Escape without changing the value', () => {
     openOn('15-1-2025')
     press('ArrowDown')
@@ -121,8 +148,11 @@ describe('datepicker keyboard (APG date picker dialog)', () => {
 
   it('pages months with the header buttons', () => {
     openOn('15-1-2025')
-    dialog().querySelector('[aria-label="Next month"]').click()
+    const next = dialog().querySelector('[aria-label="Next month"]')
+    next.focus()
+    next.click()
     expect(dialog().querySelector('h3').textContent).toBe('February 2025')
+    expect(document.activeElement).toBe(next)
     dialog().querySelector('[aria-label="Previous month"]').click()
     dialog().querySelector('[aria-label="Previous month"]').click()
     expect(dialog().querySelector('h3').textContent).toBe('December 2024')

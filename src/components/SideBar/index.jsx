@@ -18,10 +18,6 @@ const handleToggle = (event) => {
   el('#sidebar-content-1').classList.toggle('hidden', isExpanded)
   toggle.classList.toggle('rotate-180', !isExpanded)
   toggle.setAttribute('aria-expanded', String(!isExpanded))
-  toggle.setAttribute(
-    'aria-label',
-    isExpanded ? 'Expand content' : 'Hide content'
-  )
 }
 
 const SideBar = () => (
@@ -36,7 +32,7 @@ const SideBar = () => (
         class="sidebar-toggle lg:hidden"
         aria-controls="sidebar-content-1"
         aria-expanded="false"
-        aria-label="Expand content"
+        aria-label="Keyboard shortcuts"
         onClick={handleToggle}
       >
         <Icon classes="fa-solid fa-chevron-down" />

@@ -14,18 +14,26 @@ const DayCell = ({ day, focusedDate, selectedDate, today, range }) => {
 
   const isFocused = isSameDay(day.date, focusedDate)
   const isSelected = isSameDay(day.date, selectedDate)
-  const isRangeEdge =
-    isSameDay(day.date, range.start) || isSameDay(day.date, range.end)
+  const isRangeStart = isSameDay(day.date, range.start)
+  const isRangeEnd = isSameDay(day.date, range.end)
+  const isRangeEdge = isRangeStart || isRangeEnd
+  const isInside = isInRange(day.date, range)
+  // The range is spoken too, not only drawn.
+  const rangeNote = [
+    isRangeStart && 'start date',
+    isRangeEnd && 'end date',
+    isInside && !isRangeEdge && 'in range'
+  ].filter(Boolean)
 
   return (
     <td
       class="datepicker-day"
       tabindex={isFocused ? '0' : '-1'}
-      aria-label={day.dateFull}
+      aria-label={[day.dateFull, ...rangeNote].join(', ')}
       aria-selected={isSelected ? 'true' : false}
       aria-current={isSameDay(day.date, today) ? 'date' : false}
       data-iso={day.iso}
-      data-in-range={isInRange(day.date, range) ? 'true' : false}
+      data-in-range={isInside ? 'true' : false}
       data-range-edge={isRangeEdge ? 'true' : false}
     >
       {day.display}
