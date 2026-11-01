@@ -1,72 +1,147 @@
-export function useDate() {
+// Calendar maths and formatting for the in-house datepicker.
+// Names are English (en-GB) to match the page language; weeks start on
+// Monday and dates are typed and shown as dd-mm-yyyy.
+const LOCALE = 'en-GB'
+const DAYS_IN_WEEK = 7
+const SHORT_DATE = /^(\d{1,2})-(\d{1,2})-(\d{4})$/
+// Typed without separators: ddmmyyyy
+const COMPACT_DATE = /^(\d{2})(\d{2})(\d{4})$/
+
+const weekdayShort = new Intl.DateTimeFormat(LOCALE, { weekday: 'short' })
+const weekdayLong = new Intl.DateTimeFormat(LOCALE, { weekday: 'long' })
+const monthLong = new Intl.DateTimeFormat(LOCALE, { month: 'long' })
+const monthShort = new Intl.DateTimeFormat(LOCALE, { month: 'short' })
+
+const pad = (value) => String(value).padStart(2, '0')
+
+const formatShort = (date) =>
+  `${pad(date.getDate())}-${pad(date.getMonth() + 1)}-${date.getFullYear()}`
+
+const formatFull = (date) =>
+  date.toLocaleDateString(LOCALE, { dateStyle: 'full' })
+
+const formatMonthHeading = (date) =>
+  `${monthLong.format(date)} ${date.getFullYear()}`
+
+// Monday = 0 … Sunday = 6
+const weekdayIndex = (date) => (date.getDay() + 6) % DAYS_IN_WEEK
+
+const toISO = (date) =>
+  [date.getFullYear(), pad(date.getMonth() + 1), pad(date.getDate())].join('-')
+
+const fromISO = (iso) => {
+  const [year, month, day] = iso.split('-').map(Number)
+  return new Date(year, month - 1, day)
+}
+
+const isSameDay = (first, second) =>
+  Boolean(first && second) && toISO(first) === toISO(second)
+
+const addDays = (date, amount) =>
+  new Date(date.getFullYear(), date.getMonth(), date.getDate() + amount)
+
+// Keeps the day where it can and clamps to the month's last day
+// (31 January + 1 month = 28 or 29 February).
+const addMonths = (date, amount) => {
+  const target = new Date(date.getFullYear(), date.getMonth() + amount, 1)
+  const lastDay = new Date(
+    target.getFullYear(),
+    target.getMonth() + 1,
+    0
+  ).getDate()
+  target.setDate(Math.min(date.getDate(), lastDay))
+  return target
+}
+
+const startOfWeek = (date) => addDays(date, -weekdayIndex(date))
+const endOfWeek = (date) => addDays(date, DAYS_IN_WEEK - 1 - weekdayIndex(date))
+
+// Reads "d-m-yyyy", "dd-mm-yyyy" or "ddmmyyyy" and rejects impossible dates.
+const parseShort = (value = '') => {
+  const text = value.trim()
+  const match = text.match(SHORT_DATE) ?? text.match(COMPACT_DATE)
+  if (!match) return null
+
+  const [day, month, year] = match.slice(1).map(Number)
+  const date = new Date(year, month - 1, day)
+  const isReal = date.getMonth() === month - 1 && date.getDate() === day
+  return isReal ? date : null
+}
+
+// Whole days from start to end, both included.
+const countDays = (start, end) =>
+  Math.round((fromISO(toISO(end)) - fromISO(toISO(start))) / 86_400_000) + 1
+
+const describeDay = (date) => ({
+  date,
+  iso: toISO(date),
+  dateShort: formatShort(date),
+  dateFull: formatFull(date),
+  monthName: monthLong.format(date),
+  monthNameShort: monthShort.format(date),
+  dayName: weekdayLong.format(date),
+  dayNameShort: weekdayShort.format(date),
+  display: date.getDate(),
+  dayNumber: date.getDay()
+})
+
+export const useDate = () => {
   const dayNames = ref([])
-  const padStartDays = ref([])
+  const dayNamesLong = ref([])
 
-  const getShortDayNamesForHeading = (array) => {
-    // TODO we should consider start day for pure i18n
-    dayNames.value = array
-      .filter((item) => item.dayNumber < 7)
-      .splice(0, 7)
-      .sort((a, b) => a.dayNumber - b.dayNumber)
-      .map((item) => item.dayNameShort)
-
-    // Only tailored for NL Calendar.
-    dayNames.value.push(dayNames.value.shift())
+  // A known Monday-to-Sunday week gives the column headings.
+  const setDayNames = () => {
+    const monday = new Date(2024, 0, 1)
+    const week = Array.from({ length: DAYS_IN_WEEK }, (_, i) =>
+      addDays(monday, i)
+    )
+    dayNames.value = week.map((day) => weekdayShort.format(day))
+    dayNamesLong.value = week.map((day) => weekdayLong.format(day))
   }
 
+  // The month's days, led by empty cells so day 1 sits under its weekday.
   const getCalendar = (year, month) => {
-    const date = new Date(year, month, 1)
-    const dates = []
+    const firstDay = new Date(year, month, 1)
+    const daysInMonth = new Date(year, month + 1, 0).getDate()
+    const padStart = Array.from({ length: weekdayIndex(firstDay) }, () => ({
+      hidden: true
+    }))
+    const days = Array.from({ length: daysInMonth }, (_, i) =>
+      describeDay(new Date(year, month, i + 1))
+    )
 
-    // TODO: The culture should be from browser with user permission to detect, or else en-US as default
-    while (date.getMonth() === month) {
-      dates.push({
-        date: date,
-        dateShort: date.toLocaleDateString('nl-NL', {
-          dateStyle: 'short'
-        }),
-        dateFull: date.toLocaleDateString('nl-NL', { dateStyle: 'full' }),
-        monthName: new Intl.DateTimeFormat('nl-NL', { month: 'long' }).format(
-          date
-        ),
-        monthNameShort: new Intl.DateTimeFormat('nl-NL', {
-          month: 'short'
-        }).format(date),
-        dayName: new Intl.DateTimeFormat('nl-NL', { weekday: 'long' }).format(
-          date
-        ),
-        dayNameShort: new Intl.DateTimeFormat('nl-NL', {
-          weekday: 'short'
-        }).format(date),
-        display: date.getDate(),
-        dayNumber: date.getDay()
-      })
-      date.setDate(date.getDate() + 1)
-    }
-
-    if (dates[0].dayNumber > 0) {
-      for (let i = 0; i < dates[0].dayNumber - 1; i++) {
-        padStartDays.value.push({ hidden: true })
-      }
-    }
-
-    getShortDayNamesForHeading(dates)
-
-    if (padStartDays.value.length > 0) {
-      return padStartDays.value.concat(dates)
-    }
-
-    return dates
+    setDayNames()
+    return padStart.concat(days)
   }
 
-  const closeDatepicker = (targetEl) => {
-    el(targetEl).classList.add('hidden')
-    el(targetEl).classList.ariaHidden = true
+  // getCalendar cut into rows of seven, padded at the end.
+  const getWeeks = (year, month) => {
+    const cells = getCalendar(year, month)
+    const padEnd = (DAYS_IN_WEEK - (cells.length % DAYS_IN_WEEK)) % DAYS_IN_WEEK
+    const filled = cells.concat(
+      Array.from({ length: padEnd }, () => ({ hidden: true }))
+    )
+    return Array.from({ length: filled.length / DAYS_IN_WEEK }, (_, i) =>
+      filled.slice(i * DAYS_IN_WEEK, (i + 1) * DAYS_IN_WEEK)
+    )
   }
 
   return {
     getCalendar,
+    getWeeks,
     dayNames,
-    closeDatepicker
+    dayNamesLong,
+    toISO,
+    fromISO,
+    isSameDay,
+    addDays,
+    addMonths,
+    startOfWeek,
+    endOfWeek,
+    parseShort,
+    countDays,
+    formatShort,
+    formatFull,
+    formatMonthHeading
   }
 }

@@ -1,0 +1,154 @@
+/* The calendar floats, so it is the one surface with a shadow. */
+.datepicker {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  left: 0;
+  z-index: 30;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow-float);
+  animation: datepicker-in 140ms ease-out;
+}
+
+/* Full field width on phones; a fixed 20rem from sm up. */
+@media (min-width: 40rem) {
+  .datepicker {
+    right: auto;
+    width: 20rem;
+  }
+
+  .datepicker.is-flipped {
+    right: 0;
+    left: auto;
+  }
+}
+
+@keyframes datepicker-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.datepicker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.datepicker-heading {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.datepicker-heading::first-letter {
+  text-transform: uppercase;
+}
+
+.datepicker-step,
+.datepicker-close {
+  display: grid;
+  place-items: center;
+  height: 40px;
+  border-radius: var(--radius-control);
+  color: var(--muted);
+}
+
+.datepicker-step {
+  width: 40px;
+}
+
+.datepicker-step:hover,
+.datepicker-close:hover {
+  background: var(--raised);
+  color: var(--ink);
+}
+
+.datepicker-grid {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 2px;
+  table-layout: fixed;
+  font-variant-numeric: tabular-nums;
+}
+
+.datepicker-grid th {
+  height: 32px;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.datepicker-day {
+  height: 40px;
+  text-align: center;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition: background-color 120ms ease-out;
+}
+
+.datepicker-day:hover {
+  background: var(--raised);
+}
+
+.datepicker-day[aria-current='date'] {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* The span between the two picked dates, drawn as one band. The 3:1
+   control lines mark it without relying on the fill colour. */
+.datepicker-day[data-in-range='true'] {
+  border-radius: 0;
+  background: var(--range);
+  box-shadow:
+    inset 0 1px 0 var(--control),
+    inset 0 -1px 0 var(--control);
+}
+
+.datepicker-day[data-range-edge='true'] {
+  border-radius: var(--radius-control);
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+
+.datepicker-day[aria-selected='true'] {
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  box-shadow: none;
+}
+
+/* Keyboard focus: an ink ring outside the cell plus an inner focus ring,
+   so it never reads as the single accent ring of a range edge. */
+.datepicker-day:focus {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+  box-shadow: inset 0 0 0 2px var(--focus);
+}
+
+.datepicker-day[aria-selected='true']:focus {
+  outline-color: var(--ink);
+  box-shadow: inset 0 0 0 4px var(--surface);
+}
+
+.datepicker-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.datepicker-close {
+  padding-inline: 14px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}

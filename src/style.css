@@ -1,20 +1,202 @@
 @import 'tailwindcss';
 
 /*
-  Tailwind v4 compatibility: keep the v3 default border colour and
-  pointer cursor on buttons.
+  Tokens. Ink chrome on a blue-grey "ledger" ground; the one hue marks
+  the picked date and the range it spans. Every text pair holds 4.5:1,
+  control edges and focus rings 3:1, in both themes.
 */
+:root {
+  color-scheme: light dark;
+  --ground: #f2f4f7;
+  --surface: #ffffff;
+  --raised: #e9edf2;
+  --line: #dde1e7;
+  --control: #868d98;
+  --ink: #0d0f12;
+  --muted: #545a64;
+  --accent: #1d5fbf;
+  --on-accent: #ffffff;
+  --range: #e2ebf8;
+  --negative: #b3261e;
+  --primary: #0d0f12;
+  --on-primary: #ffffff;
+  --focus: #1d5fbf;
+  --shadow-float: 0 12px 32px rgb(13 15 18 / 0.14);
+  --radius-card: 8px;
+  --radius-control: 6px;
+  --font: 'Geist', ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #0f1011;
+    --surface: #18191b;
+    --raised: #232427;
+    --line: #2d2f33;
+    --control: #767c85;
+    --ink: #f1f2f3;
+    --muted: #a8acb3;
+    --accent: #8ab4f8;
+    --on-accent: #0b1220;
+    --range: #1e2a3c;
+    --negative: #ff8a80;
+    --primary: #f1f2f3;
+    --on-primary: #0d0f12;
+    --focus: #8ab4f8;
+    --shadow-float: 0 12px 32px rgb(0 0 0 / 0.5);
+  }
+}
+
 @layer base {
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+    border-color: var(--line);
+  }
+
+  /* scrollIntoView keeps the open calendar clear of the fixed footer */
+  @media (min-width: 40rem) {
+    html {
+      scroll-padding-bottom: 5rem;
+    }
+  }
+
+  body {
+    min-width: 320px;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
   }
 
   button:not(:disabled),
   [role='button']:not(:disabled) {
     cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .frame {
+    @apply mx-auto w-full max-w-5xl px-4 sm:px-6;
+  }
+
+  .site-header {
+    @apply pt-8 pb-2 sm:pt-12;
+  }
+  .site-title {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+  .site-lede {
+    @apply mt-1 max-w-prose text-[var(--muted)];
+  }
+
+  .main-grid {
+    @apply grid items-start gap-4 pt-6 pb-8 sm:pb-28 lg:grid-cols-3;
+  }
+
+  .panel {
+    @apply rounded-[var(--radius-card)] border border-[var(--line)] bg-[var(--surface)] p-4 sm:p-6;
+  }
+  .panel-head {
+    @apply mb-6;
+  }
+  .panel-title {
+    @apply text-base font-semibold;
+  }
+  .panel-text {
+    @apply mt-1 text-sm text-[var(--muted)];
+  }
+
+  .sidebar {
+    @apply lg:sticky lg:top-6 lg:col-start-3 lg:row-start-1;
+  }
+  .sidebar-head {
+    @apply flex items-center justify-between gap-4;
+  }
+  .sidebar-toggle {
+    @apply -my-2 -mr-2 grid size-11 place-items-center rounded-[var(--radius-control)] text-[var(--muted)] transition-transform hover:bg-[var(--raised)] hover:text-[var(--ink)];
+  }
+  .shortcuts {
+    @apply mt-4 grid gap-3 text-sm;
+  }
+  .shortcut {
+    @apply grid items-baseline gap-1 sm:grid-cols-[10rem_1fr] sm:gap-3 lg:grid-cols-1 lg:gap-1;
+  }
+  .shortcut dt {
+    @apply flex flex-wrap gap-1;
+  }
+  .shortcut dd {
+    @apply text-[var(--muted)];
+  }
+  kbd {
+    @apply rounded-[4px] border border-[var(--line)] bg-[var(--raised)] px-1.5 text-xs leading-5 font-medium;
+    font-family: var(--font);
+  }
+
+  .field-label {
+    @apply mb-2 block text-sm font-medium;
+  }
+  .field-input {
+    @apply h-11 w-full rounded-[var(--radius-control)] border border-[var(--control)] bg-[var(--surface)] pr-12 pl-3 text-base tabular-nums;
+  }
+  .field-input:hover {
+    border-color: var(--ink);
+  }
+  .field-input[aria-invalid='true'] {
+    border-color: var(--negative);
+    box-shadow: inset 0 0 0 1px var(--negative);
+  }
+  .field-trigger {
+    @apply absolute top-0 right-0 grid size-11 place-items-center rounded-[var(--radius-control)] text-[var(--muted)] hover:bg-[var(--raised)] hover:text-[var(--ink)];
+  }
+  .field-trigger[aria-expanded='true'] {
+    @apply bg-[var(--raised)] text-[var(--ink)];
+  }
+  .field-hint {
+    @apply mt-1.5 text-sm text-[var(--muted)];
+  }
+  .field-error {
+    @apply mt-1.5 flex items-baseline gap-1.5 text-sm font-medium text-[var(--negative)];
+  }
+
+  .form-foot {
+    @apply flex flex-col-reverse gap-4 border-t border-[var(--line)] pt-5 sm:flex-row sm:items-center sm:justify-between;
+  }
+  .form-status {
+    @apply text-sm text-[var(--muted)] tabular-nums;
+  }
+  .button-primary {
+    @apply h-11 shrink-0 rounded-[var(--radius-control)] bg-[var(--primary)] px-5 font-medium text-[var(--on-primary)] transition-[opacity,transform] hover:opacity-90 active:translate-y-px;
+  }
+
+  /* In the page flow on phones so it never covers a focused field. */
+  .site-footer {
+    @apply w-full border-t border-[var(--line)] bg-[var(--surface)] py-3 text-sm sm:fixed sm:bottom-0 sm:left-0 sm:z-10;
+  }
+  .site-footer .frame {
+    @apply flex flex-wrap items-baseline justify-between gap-x-4;
+  }
+  .site-footer-meta {
+    @apply text-[var(--muted)];
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

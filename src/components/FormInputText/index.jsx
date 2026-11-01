@@ -2,63 +2,81 @@
 import DatePicker from '../DatePicker'
 import Icon from '../Icon'
 
-const now = new Date()
+const { formatShort } = useDate()
 
-function FormInputText({
+// A date field: visible label, format hint, inline error and a button that
+// opens the datepicker dialog.
+const FormInputText = ({
   id,
-  placeholder,
   label,
   validate,
   datepicker,
-  date = now
-}) {
-  const datepickerId = `${id}Datepicker`
+  getRange,
+  class: className = ''
+}) => {
+  const hintId = `${id}-hint`
+  const errorId = `${id}-error`
+  const example = formatShort(new Date())
 
-  const openDatepicker = (event) => {
-    event.preventDefault()
+  const input = (
+    <input
+      id={id}
+      class="field-input"
+      type="text"
+      inputmode="text"
+      autocomplete="off"
+      aria-describedby={`${hintId} ${errorId}`}
+      data-label={label.toLowerCase()}
+      validate={validate ? 'true' : 'false'}
+    />
+  )
 
-    // get other datepickers and hide them
-    const otherDatepickers = Array.from(
-      el('section[data-mode=datepicker]', true)
-    ).filter((el) => {
-      return el.id !== datepickerId
+  const trigger = (
+    <button
+      id={`${id}-trigger`}
+      type="button"
+      class="field-trigger"
+      aria-label={`Choose ${label.toLowerCase()}`}
+      aria-haspopup="dialog"
+      aria-expanded="false"
+    >
+      <Icon classes="fa-regular fa-calendar" />
+    </button>
+  )
+
+  const picker =
+    datepicker &&
+    DatePicker({
+      id: `${id}Datepicker`,
+      label: label.toLowerCase(),
+      input,
+      trigger,
+      getRange
     })
 
-    otherDatepickers.forEach((el) => {
-      el.classList.add('hidden')
-      el.classList.ariaHidden = true
-    })
+  const handleTriggerClick = () =>
+    picker.isOpen() ? picker.close() : picker.open()
 
-    // open related datepicker
-    el(`#${datepickerId}`).classList.toggle('hidden')
-    el(`#${datepickerId}`).ariaHidden =
-      el(`#${datepickerId}`).ariaHidden === 'true' ? false : true
-  }
+  if (picker) trigger.addEventListener('click', handleTriggerClick)
 
   return (
-    <section class="relative">
-      <label for={id} class="sr-only">
+    <div class={`field relative ${className}`}>
+      <label for={id} class="field-label">
         {label}
       </label>
-
-      <input
-        id={id}
-        class="w-full rounded-md border-2 border-slate-100 p-2"
-        type="text"
-        placeholder={placeholder}
-        validate={validate ? 'true' : 'false'}
-      />
-      <button
-        class="absolute top-1 right-1 text-lg text-slate-300"
-        aria-label="Open calendar datepicker"
-        onCLick={openDatepicker}
-      >
-        <Icon classes="fa-regular fa-calendar-days p-2" />
-      </button>
-      {datepicker && (
-        <DatePicker id={datepickerId} calendar={date} triggerEl={`#${id}`} />
-      )}
-    </section>
+      <div class="relative">
+        {input}
+        {picker && trigger}
+      </div>
+      <p id={hintId} class="field-hint">
+        Day-month-year, for example {example}
+      </p>
+      <p id={errorId} class="field-error" hidden>
+        <Icon classes="fa-solid fa-circle-exclamation" />
+        <span />
+      </p>
+      {picker?.element}
+    </div>
   )
 }
 

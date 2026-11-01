@@ -1,9 +1,13 @@
-function Header() {
-  return (
-    <header class="bg-lime-700 p-5 text-center text-white" role="banner">
-      <h1 class="text-2xl font-bold">Form Picker</h1>
-    </header>
-  )
-}
+const Header = () => (
+  <header class="site-header" role="banner">
+    <div class="frame">
+      <h1 class="site-title">Form picker</h1>
+      <p class="site-lede">
+        A date range form with a calendar written from scratch in plain
+        JavaScript.
+      </p>
+    </div>
+  </header>
+)
 
 export default Header
