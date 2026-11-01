@@ -1,5 +1,8 @@
 export const useData = () => {
-  const fetchURL = 'http://localhost:8080/api/items/all'
+  // Production builds ship the JSON Server data as a static file (see vite.config.js)
+  const fetchURL = import.meta.env.PROD
+    ? '/api/items.json'
+    : 'http://localhost:8080/api/items/all'
 
   const allData = ref([])
   const isFetching = ref(true)

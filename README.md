@@ -1,84 +1,69 @@
 # Form picker
 
-This is a simple form picker with inhouse built datepicker.
+A date range form with a calendar written from scratch in plain JavaScript, using JSX without a framework.
 
-## Demo
+Live: https://sg-vite-vanilla-jsx.engg.app
 
-Demo is hosted on Cloudflare Pages: https://sg-vite-vanilla-jsx.engg.me/
+## Stack
 
-## Node / pnpm version
+- Vite 8 (https://vite.dev/)
+- JSX through start-dom-jsx (https://www.npmjs.com/package/start-dom-jsx), which turns JSX into real DOM nodes
+- unplugin-auto-import (https://github.com/antfu/unplugin-auto-import)
+- Tailwind CSS 4 (https://tailwindcss.com/) and SCSS (https://sass-lang.com/)
+- FontAwesome (https://fontawesome.com/), bundled with the build
+- Vitest with jsdom (https://vitest.dev/)
+
+The site has four pages: the form at `/`, plus `/accessibility`, `/privacy` and `/terms`. There is no router. The host serves `index.html` for every path and `src/index.js` picks the page from the URL. The footer links to the three extra pages and to the source on GitHub.
+
+## Requirements
 
 ```
 Node 24 (see .node-version)
 pnpm 10 (see packageManager in package.json)
 ```
 
-## Goodies
-
-1. Vanilla JS
-2. Vite 8 (https://vite.dev/)
-3. JSX (https://www.npmjs.com/package/start-dom-jsx)
-4. Unplugin auto import (https://github.com/antfu/unplugin-auto-import)
-5. Tailwind CSS 4 (https://tailwindcss.com/)
-6. FontAwesome (https://fontawesome.com/)
-7. SCSS (https://sass-lang.com/)
-8. Vitest + jsdom tests (https://vitest.dev/)
-
-## Installation
-
-Install packages
+## Run locally
 
 ```
 pnpm install
-```
-
-Install **jsonserver** globallay in your machine, skip if already installed
-
-```
-pnpm add -g json-server@0.17.4
-```
-
-Install **concurrently** globallay in your machine, skip if already installed
-
-```
-pnpm add -g concurrently
-```
-
-## Running locally
-
-Run locally WITHOUT jsonserver > localhost:3000
-
-```
 pnpm dev
 ```
 
-Run locally WITH jsonserver > localhost:3000
+That starts Vite on localhost:3000 without the sample API.
+
+To run with the sample API, install json-server and concurrently globally once, then use `dev2`. It serves `jsonserver/db.json` on port 8080 next to Vite.
 
 ```
+pnpm add -g json-server@0.17.4 concurrently
 pnpm dev2
 ```
 
-Generate files for production
-
-```
-pnpm build
-```
-
-Generate files for production and run preview from generated files > localhost:8000
-
-```
-pnpm prod
-```
-
-## Checks
-
-Run the tests, lint and format check
+## Test and check
 
 ```
 pnpm test
 pnpm lint
 pnpm format:check
 ```
+
+## Build
+
+```
+pnpm build
+pnpm prod
+```
+
+`pnpm build` writes the site to `dist/`. Production builds have no json-server, so the build also writes the items from `jsonserver/db.json` to `dist/api/items.json` and the app fetches that file. `pnpm prod` builds and then previews the result on localhost:8000.
+
+## Deploy
+
+The site runs as a Cloudflare Worker with static assets, configured in `wrangler.jsonc`.
+
+```
+pnpm run deploy
+```
+
+This builds and runs `wrangler deploy`. Wrangler 4 is a dev dependency, so you only need `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` set in the environment. Use `pnpm run deploy`, not `pnpm deploy`, which is a built-in pnpm workspace command.
 
 ## License
 
