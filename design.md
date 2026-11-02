@@ -5,7 +5,7 @@
 - `index.html` → `src/index.js` → page picked from `location.pathname` (`src/index.js:17-28`) → appended to `#app`. Unknown paths → form page. WHY: no framework; JSX compiles to real DOM nodes via `start-dom-jsx` `h` (`vite.config.js`, oxc classic pragma, `development: false` so no `__self`/`__source` attributes land in the DOM).
 - Components = functions returning DOM elements; state = `ref()` objects (`src/core/index.js`) held inside hooks.
 - Pages: `/` form (`pages/Index.jsx`) · `/accessibility` · `/privacy` · `/terms`; legal pages share `components/LegalPage` (header, back link, footer). <!-- enggflo -->
-- Footer (`components/Footer/index.jsx`) links the three legal pages (`aria-current="page"` on the active one) + the GitHub repo. Anchors built by `components/Link`. WHY: `start-dom-jsx` treats `<a>` as SVG. <!-- enggflo -->
+- Footer (`components/Footer/index.jsx`) links the three legal pages (`aria-current="page"` on the active one) + one GitHub icon link to the repo (new tab, `aria-label`). Anchors built by `components/Link`. WHY: `start-dom-jsx` treats `<a>` as SVG. <!-- enggflo -->
 - Hooks + core helpers are globals through `unplugin-auto-import` (`vite.config.js`). WHY: keeps component files import-free.
 
 ## Data flow

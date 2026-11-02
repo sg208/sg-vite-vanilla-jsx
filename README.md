@@ -13,7 +13,7 @@ Live: https://sg-vite-vanilla-jsx.engg.app
 - FontAwesome (https://fontawesome.com/), bundled with the build
 - Vitest with jsdom (https://vitest.dev/)
 
-The site has four pages: the form at `/`, plus `/accessibility`, `/privacy` and `/terms`. There is no router. The host serves `index.html` for every path and `src/index.js` picks the page from the URL. The footer links to the three extra pages and to the source on GitHub.
+The site has four pages: the form at `/`, plus `/accessibility`, `/privacy` and `/terms`. There is no router. The host serves `index.html` for every path and `src/index.js` picks the page from the URL. The footer links to the three extra pages and, through a small GitHub icon, to the source.
 
 ## Requirements
 
