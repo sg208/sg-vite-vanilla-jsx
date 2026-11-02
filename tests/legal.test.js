@@ -39,7 +39,7 @@ describe('legal pages', () => {
     }
   )
 
-  it('renders real HTML links in the footer, including the repo', () => {
+  it('renders real HTML links in the footer', () => {
     render('/', Index)
 
     const links = footerLinks()
@@ -47,11 +47,31 @@ describe('legal pages', () => {
     expect(links.map((link) => link.getAttribute('href'))).toEqual([
       '/accessibility',
       '/privacy',
-      '/terms',
-      REPO_URL
+      '/terms'
     ])
-    expect(links.at(-1).textContent).toBe('Source on GitHub')
     expect(links.some((link) => link.hasAttribute('aria-current'))).toBe(false)
+  })
+
+  it('links the repo once, as a labelled icon in the footer', () => {
+    render('/', Index)
+
+    const repoLinks = [...document.querySelectorAll('a[href*="github.com"]')]
+    expect(repoLinks).toHaveLength(1)
+
+    const [repoLink] = repoLinks
+    expect(repoLink).toBeInstanceOf(HTMLAnchorElement)
+    expect(repoLink.closest('footer[role=contentinfo]')).not.toBeNull()
+    expect(repoLink.getAttribute('href')).toBe(REPO_URL)
+    expect(repoLink.getAttribute('aria-label')).toBe(
+      'Source code on GitHub (opens in a new tab)'
+    )
+    expect(repoLink.getAttribute('target')).toBe('_blank')
+    expect(repoLink.getAttribute('rel')).toBe('noopener noreferrer')
+    expect(repoLink.textContent.trim()).toBe('')
+
+    const icon = repoLink.querySelector('svg')
+    expect(icon.getAttribute('aria-hidden')).toBe('true')
+    expect(icon.getAttribute('focusable')).toBe('false')
   })
 
   it('names Cloudflare on the privacy page', () => {

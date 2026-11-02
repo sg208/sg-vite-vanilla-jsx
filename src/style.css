@@ -183,10 +183,13 @@
     @apply w-full border-t border-[var(--line)] bg-[var(--surface)] py-3 text-sm sm:fixed sm:bottom-0 sm:left-0 sm:z-10;
   }
   .site-footer .frame {
-    @apply flex flex-wrap items-baseline justify-between gap-x-4;
+    @apply flex flex-wrap items-center justify-between gap-x-4;
   }
   .site-footer-meta {
-    @apply text-[var(--muted)];
+    @apply flex items-center gap-x-2 text-[var(--muted)];
+  }
+  .site-footer-repo {
+    @apply -mr-1 inline-flex size-11 items-center justify-center rounded text-[var(--muted)] hover:text-[var(--ink)] sm:size-7;
   }
   .site-footer-links {
     @apply -mx-2 flex flex-wrap gap-x-1;
