@@ -70,8 +70,13 @@ describe('legal pages', () => {
     expect(repoLink.textContent.trim()).toBe('')
 
     const icon = repoLink.querySelector('svg')
+    expect(icon).not.toBeNull()
     expect(icon.getAttribute('aria-hidden')).toBe('true')
     expect(icon.getAttribute('focusable')).toBe('false')
+    // start-dom-jsx drops SVG children, so the mark must actually be drawn
+    const mark = icon.querySelector('path')
+    expect(mark?.namespaceURI).toBe('http://www.w3.org/2000/svg')
+    expect(mark.getAttribute('d')).toMatch(/^M8 0C/)
   })
 
   it('names Cloudflare on the privacy page', () => {
