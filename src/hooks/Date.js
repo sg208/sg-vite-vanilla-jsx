@@ -85,19 +85,15 @@ const describeDay = (date) => ({
   dayNumber: date.getDay()
 })
 
-export const useDate = () => {
-  const dayNames = ref([])
-  const dayNamesLong = ref([])
+// A known Monday-to-Sunday week gives the column headings.
+const MONDAY = new Date(2024, 0, 1)
+const WEEK = Array.from({ length: DAYS_IN_WEEK }, (_, i) => addDays(MONDAY, i))
+const DAY_NAMES_SHORT = WEEK.map((day) => weekdayShort.format(day))
+const DAY_NAMES_LONG = WEEK.map((day) => weekdayLong.format(day))
 
-  // A known Monday-to-Sunday week gives the column headings.
-  const setDayNames = () => {
-    const monday = new Date(2024, 0, 1)
-    const week = Array.from({ length: DAYS_IN_WEEK }, (_, i) =>
-      addDays(monday, i)
-    )
-    dayNames.value = week.map((day) => weekdayShort.format(day))
-    dayNamesLong.value = week.map((day) => weekdayLong.format(day))
-  }
+export const useDate = () => {
+  const dayNames = ref(DAY_NAMES_SHORT)
+  const dayNamesLong = ref(DAY_NAMES_LONG)
 
   // The month's days, led by empty cells so day 1 sits under its weekday.
   const getCalendar = (year, month) => {
@@ -110,7 +106,6 @@ export const useDate = () => {
       describeDay(new Date(year, month, i + 1))
     )
 
-    setDayNames()
     return padStart.concat(days)
   }
 

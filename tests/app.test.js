@@ -42,6 +42,17 @@ describe('form picker page', () => {
     )
   })
 
+  it('renders no empty modal placeholder', () => {
+    expect(document.querySelector('#modal-container')).toBeNull()
+  })
+
+  it('marks validated fields with a data attribute, not a made-up one', () => {
+    const fields = [...document.querySelectorAll('input[data-validate="true"]')]
+
+    expect(fields.map((field) => field.id)).toEqual(['startDate', 'endDate'])
+    expect(document.querySelector('input[validate]')).toBeNull()
+  })
+
   it('marks and announces empty fields when Find items is pressed', () => {
     findButton().click()
     expect(document.querySelector('#arialive-assertive').textContent).toBe('')

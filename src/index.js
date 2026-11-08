@@ -20,13 +20,13 @@ import '@fortawesome/fontawesome-free/scss/solid.scss'
 // No router: the host serves index.html for every path (wrangler.jsonc),
 // so pick the page from the URL. Unknown paths show the form.
 const routes = {
-  '/': { title: 'Form Picker', page: Index },
+  '/': { title: 'Form picker', page: Index },
   '/accessibility': {
-    title: 'Accessibility · Form Picker',
+    title: 'Accessibility · Form picker',
     page: Accessibility
   },
-  '/privacy': { title: 'Privacy · Form Picker', page: Privacy },
-  '/terms': { title: 'Terms · Form Picker', page: Terms }
+  '/privacy': { title: 'Privacy · Form picker', page: Privacy },
+  '/terms': { title: 'Terms · Form picker', page: Terms }
 }
 
 const path = window.location.pathname.replace(/\/+$/, '') || '/'

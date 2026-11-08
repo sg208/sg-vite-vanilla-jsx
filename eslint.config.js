@@ -3,20 +3,9 @@ import globals from 'globals'
 
 // Exports auto-imported by unplugin-auto-import (vite.config.js)
 const autoImportGlobals = Object.fromEntries(
-  [
-    'h',
-    'Fragment',
-    'el',
-    'classList',
-    'html',
-    'nextTick',
-    'scrollBottom',
-    'ref',
-    'jsx',
-    'useData',
-    'useDate',
-    'useForm'
-  ].map((name) => [name, 'readonly'])
+  ['h', 'Fragment', 'el', 'ref', 'useData', 'useDate', 'useForm'].map(
+    (name) => [name, 'readonly']
+  )
 )
 
 export default [

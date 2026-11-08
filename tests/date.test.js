@@ -40,6 +40,16 @@ describe('useDate().getCalendar', () => {
   })
 })
 
+describe('useDate day names', () => {
+  it('are ready without building a calendar first', () => {
+    const { dayNames, dayNamesLong } = useDate()
+
+    expect(dayNames.value).toHaveLength(7)
+    expect(dayNamesLong.value[0]).toBe('Monday')
+    expect(dayNamesLong.value.at(-1)).toBe('Sunday')
+  })
+})
+
 describe('useDate padding', () => {
   it('pads six cells when a month starts on a Sunday', () => {
     const { getCalendar } = useDate()

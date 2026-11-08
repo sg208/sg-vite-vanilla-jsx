@@ -43,14 +43,6 @@ export default defineConfig({
       ]
     })
   ],
-  build: {
-    emptyOutDir: false,
-    rollupOptions: {
-      output: {
-        entryFileNames: 'index.js'
-      }
-    }
-  },
   oxc: {
     jsx: {
       runtime: 'classic',
