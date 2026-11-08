@@ -1,7 +1,6 @@
 import Header from '../components/Header'
 import Main from '../components/Main'
 import Footer from '../components/Footer'
-import Modal from '../components/Modal'
 
 const Index = () => (
   <div class="page">
@@ -10,7 +9,6 @@ const Index = () => (
       <Main />
       <Footer />
     </div>
-    <Modal />
     <div
       id="arialive-assertive"
       aria-atomic="true"

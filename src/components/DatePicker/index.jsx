@@ -8,7 +8,6 @@ import './datepicker.css'
 const {
   dayNames,
   dayNamesLong,
-  getCalendar,
   addMonths,
   fromISO,
   parseShort,
@@ -22,8 +21,6 @@ const openPicker = ref(null)
 const DatePicker = ({ id, label, input, trigger, getRange }) => {
   const headingId = `${id}-heading`
   const state = { viewMonth: new Date(), focusedDate: new Date() }
-
-  getCalendar(state.viewMonth.getFullYear(), state.viewMonth.getMonth())
 
   const heading = (
     <h3 id={headingId} class="datepicker-heading" aria-live="polite" />

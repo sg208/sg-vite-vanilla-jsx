@@ -1,4 +1,3 @@
-import './Footer.module.css'
 import Link from '../Link'
 
 const REPO_URL = 'https://github.com/sg208/sg-vite-vanilla-jsx'
@@ -39,7 +38,7 @@ const pages = [
 const currentPath = () => window.location.pathname.replace(/\/+$/, '') || '/'
 
 const Footer = () => (
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer">
     <div class="frame">
       <nav aria-label="Site">
         <ul class="site-footer-links">

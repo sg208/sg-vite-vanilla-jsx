@@ -7,14 +7,13 @@ export const useData = () => {
   const allData = ref([])
   const isFetching = ref(true)
 
-  const fetchData = async () => {
+  const getData = async () => {
     const response = await fetch(fetchURL)
+    if (!response.ok) {
+      throw new Error(`Items request failed: ${response.status}`)
+    }
     allData.value = await response.json()
     isFetching.value = false
-  }
-
-  const getData = async () => {
-    await fetchData()
   }
 
   return {

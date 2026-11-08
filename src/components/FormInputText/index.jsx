@@ -23,11 +23,10 @@ const FormInputText = ({
       id={id}
       class="field-input"
       type="text"
-      inputmode="text"
       autocomplete="off"
       aria-describedby={`${hintId} ${errorId}`}
       data-label={label.toLowerCase()}
-      validate={validate ? 'true' : 'false'}
+      data-validate={validate ? 'true' : 'false'}
     />
   )
 

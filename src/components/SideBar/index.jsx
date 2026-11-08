@@ -1,4 +1,4 @@
-import Icon from './../Icon'
+import Icon from '../Icon'
 
 const shortcuts = [
   ['←  →', 'Previous or next day'],

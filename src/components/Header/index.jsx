@@ -1,5 +1,5 @@
 const Header = () => (
-  <header class="site-header" role="banner">
+  <header class="site-header">
     <div class="frame">
       <h1 class="site-title">Form picker</h1>
       <p class="site-lede">

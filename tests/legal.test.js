@@ -12,9 +12,7 @@ const render = (path, page) => {
   document.querySelector('#app').append(page())
 }
 
-const footerLinks = () => [
-  ...document.querySelectorAll('footer[role=contentinfo] nav a')
-]
+const footerLinks = () => [...document.querySelectorAll('footer nav a')]
 
 describe('legal pages', () => {
   afterEach(() => window.history.pushState({}, '', '/'))
@@ -60,7 +58,7 @@ describe('legal pages', () => {
 
     const [repoLink] = repoLinks
     expect(repoLink).toBeInstanceOf(HTMLAnchorElement)
-    expect(repoLink.closest('footer[role=contentinfo]')).not.toBeNull()
+    expect(repoLink.closest('footer')).not.toBeNull()
     expect(repoLink.getAttribute('href')).toBe(REPO_URL)
     expect(repoLink.getAttribute('aria-label')).toBe(
       'Source code on GitHub (opens in a new tab)'

@@ -10,10 +10,11 @@
 
 ## Data flow
 
-- `useData` fetches items: dev → json-server `localhost:8080`; prod → `/api/items.json`, emitted at build from `jsonserver/db.json` (`src/hooks/Data.js:3-5`, `vite.config.js:8-21`). WHY: the Worker serves static assets only, no API.
+- `useData` fetches items: dev → json-server `localhost:8080`; prod → `/api/items.json`, emitted at build from `jsonserver/db.json` (`src/hooks/Data.js:3-5`, `vite.config.js:8-21`). WHY: the Worker serves static assets only, no API. Non-ok response → `getData` throws `Items request failed: <status>` (`src/hooks/Data.js:11-13`). <!-- enggflo -->
 - `FormInputText` owns the label, input, hint, error and the trigger button; it creates a `DatePicker` controller (`{ element, open, close, isOpen }`).
 - `DatePicker` follows the WAI-ARIA APG date picker dialog pattern: `role="dialog"` labelled by the month heading, a `role="grid"` table with roving `tabindex`, `aria-selected` on the picked day and `aria-current="date"` on today. Grid keys live in `src/components/DatePicker/keys.js`; rows are rendered by `Weeks.jsx`.
 - Picking a date writes the date as dd-mm-yyyy into the input, fires an `input` event, closes the dialog and returns focus to the trigger.
+- `Content` validates every `input[data-validate="true"]` (`src/components/Content/index.jsx:7`); `FormInputText` sets the attribute from its `validate` prop. <!-- enggflo -->
 - `useForm.validateForms` sets `aria-invalid`, fills the field's error text (tied with `aria-describedby`), focuses the first invalid field and announces the errors in `#arialive-assertive`. A valid range is summarised in `#form-status` and announced politely.
 
 ## Hosting <!-- enggflo -->

@@ -4,7 +4,7 @@ import Link from '../Link'
 // Shared layout for the accessibility, privacy and terms pages.
 const LegalPage = ({ title, updated, children }) => (
   <div class="page">
-    <header class="site-header" role="banner">
+    <header class="site-header">
       <div class="frame">
         <Link class="back-link" href="/">
           Back to the form picker
@@ -13,7 +13,7 @@ const LegalPage = ({ title, updated, children }) => (
         <p class="site-lede">Last updated {updated}.</p>
       </div>
     </header>
-    <main class="frame legal-main" role="main">
+    <main class="frame legal-main">
       <div class="panel legal-prose">{children}</div>
     </main>
     <Footer />

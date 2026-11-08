@@ -4,7 +4,7 @@ import FormInputText from '../FormInputText'
 const { validateForms, setFieldError, getFieldError, getRange, describeRange } =
   useForm()
 
-const getFields = () => Array.from(el('input[validate=true]', true))
+const getFields = () => Array.from(el('input[data-validate="true"]', true))
 
 const updateSummary = () => {
   const summary = el('#form-status')
