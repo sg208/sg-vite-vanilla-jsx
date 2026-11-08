@@ -24,9 +24,10 @@ describe('useData', () => {
       'fetch',
       vi.fn(async () => failedResponse)
     )
-    const { allData, getData } = useData()
+    const { allData, getData, isFetching } = useData()
 
     await expect(getData()).rejects.toThrow('Items request failed: 500')
     expect(allData.value).toEqual([])
+    expect(isFetching.value).toBe(false)
   })
 })
